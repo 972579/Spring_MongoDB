@@ -27,6 +27,9 @@ class SerializableUtil {
      * @return lambda表达式的方法
      */
     static <T> String convertToFieldName(T fn) {
+        if (!fn.getClass().isSynthetic()) {
+            throw new RuntimeException("该方法仅能传入 lambda 表达式产生的合成类");
+        }
         SerializedLambda lambda = getSerializedLambda(fn);
         // 获取方法名
         String methodName = lambda.getImplMethodName();
